@@ -1,6 +1,5 @@
 import math
 import torch
-import optimizer.optimizer
 from   pinn      import pinn
 from   dataset   import generate
 from   optimizer import optimizer

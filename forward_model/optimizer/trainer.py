@@ -24,7 +24,7 @@ def train(model, training_loader, validation_loader, optimizer, scheduler, epoch
             return True
 
         if epoch % 10 == 0:
-            print("Epoch {0}, PDE MSE Error: {1}".format(epoch, model.last_pde_error.item()))
+            print("Epoch {0:6d}, PDE MSE Error: {1}".format(epoch, model.last_pde_error.item()))
 
         if epoch % scheduler_rate == 0:
             scheduler.step()

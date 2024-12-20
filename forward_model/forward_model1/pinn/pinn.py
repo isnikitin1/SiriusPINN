@@ -67,29 +67,6 @@ class PINN(nn.Module):
         residue = u_t + self.lambda1 * u * u_x - self.lambda2 * u_xx
         self.last_pde_error = self.loss_function(residue, torch.zeros_like(residue))
         return self.loss_function(residue, torch.zeros_like(residue))
-    def error_pde_origin(self, state):
-        state_ = state.clone()
-        state_.requires_grad = True
 
-        u = self.forward(state_)
-
-        dx_dt = torch.autograd.grad(
-            u, state_,
-            torch.ones([state_.shape[0],1]),
-            retain_graph=True, create_graph=True
-        )[0]
-        dxx_dtt = torch.autograd.grad(
-            dx_dt, state_,
-            torch.ones(state_.shape),
-            create_graph=True
-        )[0]
-
-        u_t = dx_dt[:,[1]]
-        u_x = dx_dt[:,[0]]
-        u_xx = dxx_dtt[:,[0]]
-
-        residue = u_t + self.lambda1 * u * u_x - self.lambda2 * u_xx
-        return self.loss_function(residue, torch.zeros_like(residue))
-
-    def error_total(self, state_beginning, state_border, state_general, state_origin):
-        return self.error_initial(state_beginning) + self.error_border(state_border) + self.error_pde(state_general) + self.error_pde_origin(state_origin)
+    def error_total(self, state_beginning, state_border, state_general):
+        return self.error_initial(state_beginning) + self.error_border(state_border) + self.error_pde(state_general)

@@ -13,11 +13,6 @@ class CustomDataset(Dataset):
         num_beginning = int(num_samples)
         num_border = int(num_samples)
         num_random = int(num_samples)
-        num_origin = int(num_samples)
-
-        self.origin_x = (torch.rand((num_origin, 1)) * 2 - 1) / 11
-        self.origin_t = torch.sqrt(torch.rand((num_origin, 1)))
-        self.origin_all = torch.cat([self.origin_t_x, self.origin_t], dim=1)
 
         self.random_x = torch.rand((num_random, 1)) * 2 - 1
         self.random_t = torch.rand((num_random, 1))
@@ -35,7 +30,7 @@ class CustomDataset(Dataset):
         return self.num_samples
 
     def __getitem__(self, item):
-        return self.beginning_all[item], self.border_all[item], self.random_all[item], self.origin_all[item]
+        return self.beginning_all[item], self.border_all[item], self.random_all[item]
 
 def generate(dataset_size, training_fraction, batch_size):
     dataset = CustomDataset(dataset_size)

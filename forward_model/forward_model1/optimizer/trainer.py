@@ -9,12 +9,12 @@ def train(model, training_loader, validation_loader, optimizer, scheduler, epoch
         training_cnt = 0
         validation_cnt = 0
 
-        for i, (batch_beginning, batch_border, batch_general, batch_origin) in enumerate(training_loader):
-            training_loss += batch.train_batch(model, batch_beginning, batch_border, batch_general, batch_origin, optimizer)
+        for i, (batch_beginning, batch_border, batch_general) in enumerate(training_loader):
+            training_loss += batch.train_batch(model, batch_beginning, batch_border, batch_general, optimizer)
             training_cnt += 1
 
-        for i, (batch_beginning, batch_border, batch_general, batch_origin) in enumerate(validation_loader):
-            validation_loss += batch.validate_batch(model, batch_beginning, batch_border, batch_origin, batch_general)
+        for i, (batch_beginning, batch_border, batch_general) in enumerate(validation_loader):
+            validation_loss += batch.validate_batch(model, batch_beginning, batch_border, batch_general)
             validation_cnt += 1
 
         training_loss_history.append(training_loss / training_cnt)

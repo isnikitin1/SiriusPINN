@@ -5,6 +5,7 @@ from matplotlib.colors import LogNorm
 from matplotlib.ticker import LogLocator
 import json
 import imageio
+import random
 
 #цвета графика
 def grcolor(c):
@@ -91,3 +92,14 @@ def gif_grU1(U,X,Exact):
     with imageio.get_writer('animation.gif', mode='I') as writer:
         for i in range(100):
             writer.append_data(imageio.imread(str(i)+'.png'))
+def dataset_plot(x,t):
+    fig, ax = plt.subplots()
+    plt.scatter(x, t, color = '#000000',marker = "x",clip_on=False)
+    gr = ax.imshow(U,cmap='cool',extent=(-1, 1, -0,1))
+    plt.xlabel('X')
+    plt.ylabel('T')
+    axins = inset_axes(ax, width="5%", height="100%", loc='upper left', bbox_to_anchor=(1.03, 0., 1, 1), bbox_transform=ax.transAxes, borderpad=0)
+    
+    plt.colorbar(gr, cax=axins)
+    plt.title('U')
+    plt.show()

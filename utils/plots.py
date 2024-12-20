@@ -92,7 +92,7 @@ def gif_grU1(U,X,Exact):
     with imageio.get_writer('animation.gif', mode='I') as writer:
         for i in range(100):
             writer.append_data(imageio.imread(str(i)+'.png'))
-def dataset_plot(x,t):
+def dataset_plot(x,t,U):
     fig, ax = plt.subplots()
     plt.scatter(x, t, color = '#000000',marker = "x",clip_on=False)
     gr = ax.imshow(U,cmap='cool',extent=(-1, 1, -0,1))

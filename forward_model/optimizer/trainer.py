@@ -4,21 +4,11 @@ def train(model, training_loader, validation_loader, optimizer, scheduler, epoch
     training_loss_history, validation_loss_history = [], []
 
     for epoch in range(epochs):
-        training_loss = 0
-        validation_loss = 0
-        training_cnt = 0
-        validation_cnt = 0
+        training_loss = batch.train_batch(model, training_loader.beginning_all, training_loader.border_all, training_loader.random_all, optimizer)
+        validation_loss = batch.validate_batch(model, validation_loader.beginning_all, validation_loader.border_all, validation_loader.random_all)
 
-        for i, (batch_beginning, batch_border, batch_general, batch_origin) in enumerate(training_loader):
-            training_loss += batch.train_batch(model, batch_beginning, batch_border, batch_general, batch_origin, optimizer)
-            training_cnt += 1
-
-        for i, (batch_beginning, batch_border, batch_general, batch_origin) in enumerate(validation_loader):
-            validation_loss += batch.validate_batch(model, batch_beginning, batch_border, batch_origin, batch_general)
-            validation_cnt += 1
-
-        training_loss_history.append(training_loss / training_cnt)
-        validation_loss_history.append(validation_loss / validation_cnt)
+        training_loss_history.append(training_loss)
+        validation_loss_history.append(validation_loss)
 
         if training_limit > model.last_pde_error.item():
             return True
